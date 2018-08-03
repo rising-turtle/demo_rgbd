@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package>
+    <name>demo_rgbd</name>
+    <version>0.1.0</version>
+    <description>
+        Depth Enhanced Monocular Odometry (RGBD camera version)
+    </description>
+    <author> Ji Zhang</author>
+    <maintainer email="xxx@xx.edu">XXX</maintainer>
+    <license>LGPL</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+    
+</package>
+    
