@@ -10,7 +10,8 @@ set_property(TARGET isamlib PROPERTY OUTPUT_NAME isam)
 # simple way of finding CHOLMOD
 find_package(Cholmod REQUIRED)
 include_directories(${CHOLMOD_INCLUDES})
-target_link_libraries(isamlib ${CHOLMOD_LIBRARIES})
+# message("CHOLMOD_LIBRARIES: ${CHOLMOD_LIBRARIES}")
+target_link_libraries(isamlib ${CHOLMOD_LIBRARIES} lapack_atlas suitesparseconfig)
 
 # install library
 install(TARGETS isamlib

@@ -6,6 +6,10 @@ cmake_minimum_required(VERSION 2.4.6)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -w")
 SET(CMAKE_BUILD_TYPE "RelWithDebInfo")
 
+if(COMMAND cmake_policy)
+    cmake_policy(SET CMP0003 NEW)
+endif(COMMAND cmake_policy)
+
 # Set the build type.  Options are:
 #  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
 #  Debug          : w/ debug symbols, w/o optimization
@@ -21,10 +25,10 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 #set the default path for built libraries to the "lib" directory
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
-set(OpenCV_DIR "/home/hzhang8/work/3rdlib/opencv-3.3.1/build")
+set(OpenCV_DIR "/home/davidz/work/3rdlibs/OpenCV-2.4.10/build")
 find_package(OpenCV REQUIRED)
 message("OpenCV_INCLUDE_DIR: ${OpenCV_INCLUDE_DIRS}")
-include_directories("/home/hzhang8/work/3rdlib/opencv-3.3.1/install/include")
+# include_directories("/home/hzhang8/work/3rdlib/opencv-3.3.1/install/include")
 
 find_package(catkin REQUIRED COMPONENTS
     roscpp
@@ -56,19 +60,23 @@ catkin_package(
 #target_link_libraries(example ${PROJECT_NAME})
 
 SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-find_package(Eigen3 REQUIRED)
-include_directories(${EIGEN3_INCLUDE_DIR})
+# find_package(Eigen3 REQUIRED)
+# include_directories(${EIGEN3_INCLUDE_DIR})
+include_directories("/usr/include/eigen3")
 include_directories("${PROJECT_SOURCE_DIR}/include")
 include_directories(${catkin_INCLUDE_DIRS})
 
 add_subdirectory(isamlib)
-link_libraries(isamlib)
-link_libraries(${catkin_LIBRARIES})
-link_libraries(${OpenCV_LIBS})
+ link_libraries(isamlib)
+ link_libraries(${catkin_LIBRARIES})
+ link_libraries(${OpenCV_LIBS})
 
 add_executable(featureTracking src/featureTracking.cpp)
+# target_link_libraries(featureTracking ${catkin_LIBRARIES} ${OpenCV_LIBS})
 add_executable(visualOdometry src/visualOdometry.cpp)
+# target_link_libraries(visualOdometry ${catkin_LIBRARIES} ${OpenCV_LIBS})
 add_executable(bundleAdjust src/bundleAdjust.cpp)
+# target_link_libraries(bundleAdjust isamlib ${catkin_LIBRARIES} ${OpenCV_LIBS})
 add_executable(processDepthmap src/processDepthmap.cpp)
 add_executable(stackDepthPoint src/stackDepthPoint.cpp)
 add_executable(transformMaintenance src/transformMaintenance.cpp)
